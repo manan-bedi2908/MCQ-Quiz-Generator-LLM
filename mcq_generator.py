@@ -76,6 +76,14 @@ with st.form('user_inputs'):
         with st.spinner('Generating...'):
             try:
                 text = parse_file(uploaded_file)
+                # with get_openai_callback() as cb:
+                response = generate_evaluate_chain(
+                    'text': text,
+                    'number': mcq_count,
+                    'grade': grade,
+                    'tone': tone,
+                    'response_json': json.dumps(RESPONSE_JSON)
+                )
             except Exception as e:
                 traceback.print_exception(type(e), e, e.__traceback__)
                 st.error('Error')

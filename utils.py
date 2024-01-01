@@ -20,3 +20,50 @@ def parse_file(file):
         raise Exception(
             'Unsupported File Format. Only PDF and Text Files are supported'
         )
+    
+RESPONSE_JSON = {
+    "1": {
+        "no": "1",
+        "mcq": "multiple choice question",
+        "options": {
+            "a": "choice here",
+            "b": "choice here",
+            "c": "choice here",
+            "d": "choice here"
+        },
+        "correct": "correct answer"
+    },
+    "2": {
+        "no": "2",
+        "mcq": "multiple choice question",
+        "options": {
+            "a": "choice here",
+            "b": "choice here",
+            "c": "choice here",
+            "d": "choice here"
+        },
+        "correct": "correct answer"
+    },
+    "3": {
+        "no": "3",
+        "mcq": "multiple choice question",
+        "options": {
+            "a": "choice here",
+            "b": "choice here",
+            "c": "choice here",
+            "d": "choice here"
+        },
+        "correct": "correct answer"
+    },
+    "4": {
+        "no": "4",
+        "mcq": "multiple choice question",
+        "options": {
+            "a": "choice here",
+            "b": "choice here",
+            "c": "choice here",
+            "d": "choice here"
+        },
+        "correct": "correct answer"
+    },
+}
