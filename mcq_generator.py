@@ -6,6 +6,7 @@ from langchain.callbacks import get_openai_callback
 from dotenv import load_dotenv
 import pandas as pd
 import os
+import traceback
 from utils import parse_file
 
 load_dotenv()
@@ -27,6 +28,9 @@ with st.form('user_inputs'):
         with st.spinner('Generating...'):
             try:
                 text = parse_file(uploaded_file)
+            except Exception as e:
+                traceback.print_exception(type(e), e, e.__traceback__)
+                st.error('Error')
             
 
 
