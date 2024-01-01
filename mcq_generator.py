@@ -15,6 +15,27 @@ llm = HuggingFaceHub(repo_id = 'distilbert-base-uncased',
                          model_kwargs = {'temperature': 0.5,
                                          'max_length': 512})
 
+template = """
+Text: {text}
+You are an expert MCQ Creator. Given the above text, it is your job to\n
+create a quiz of {number} multiple choice questions for grade {grade} students in {tone} tone.
+Make sure the questions are not repeated and check all the questions to be conforming the text as well.
+Make sure to format your response like RESPONSE_JSON below and use it as a guide. \
+Ensure to make {number} MCQs
+### RESPONSE_JSON
+{response_json}
+"""
+
+quiz_generation_prompt = PromptTemplate(
+    input_variables=['text', 'number', 'grade', 'tone', 'response_json'],
+    template = template
+)
+
+quiz_chain = LLMChain(llm = llm, 
+                      prompt = quiz_generation_prompt,
+                      output_key = 'quiz',
+                      verbose = True)
+
 st.title('MCQ Creator Application using LangChain')
 
 with st.form('user_inputs'):
