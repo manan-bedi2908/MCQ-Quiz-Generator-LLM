@@ -7,11 +7,12 @@ from dotenv import load_dotenv
 import pandas as pd
 import os
 import traceback
-from utils import parse_file
+import json
+from utils import parse_file, RESPONSE_JSON, get_table_data
 
 load_dotenv()
 
-llm = HuggingFaceHub(repo_id = 'distilbert-base-uncased',
+llm = HuggingFaceHub(repo_id = 'google/flan-t5-small',
                          model_kwargs = {'temperature': 0.5,
                                          'max_length': 512})
 
@@ -77,16 +78,37 @@ with st.form('user_inputs'):
             try:
                 text = parse_file(uploaded_file)
                 # with get_openai_callback() as cb:
-                response = generate_evaluate_chain(
-                    'text': text,
-                    'number': mcq_count,
-                    'grade': grade,
-                    'tone': tone,
-                    'response_json': json.dumps(RESPONSE_JSON)
-                )
+                response=generate_evaluate_chain(
+                        {
+                        "text": text,
+                        "number": mcq_count,
+                        "grade":grade,
+                        "tone": tone,
+                        "response_json": json.dumps(RESPONSE_JSON)
+                        }
+                    )
+                st.write(response)
+                
+
             except Exception as e:
                 traceback.print_exception(type(e), e, e.__traceback__)
                 st.error('Error')
             
+            # else:
+            #     if isinstance(response, dict):
+            #         #Extract the quiz data from the response
+            #         quiz=response.get("quiz", None)
+            #         if quiz is not None:
+            #             # table_data=get_table_data(quiz)
+            #             # st.write(quiz)
+            #             # if table_data is not None:
+            #             #     df=pd.DataFrame(table_data)
+            #             #     df.index=df.index+1
+            #             #     st.table(df)
+            #             #     #Display the review in atext box as well
+            #             #     st.text_area(label="Review", value=response["review"])
+            #             # else:
+            #             #     st.error("Error in the table data")
 
-
+            #     else:
+            #         st.write(response)
