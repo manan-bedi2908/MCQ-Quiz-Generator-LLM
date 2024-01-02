@@ -92,7 +92,7 @@ with st.form('user_inputs'):
 
             except Exception as e:
                 traceback.print_exception(type(e), e, e.__traceback__)
-                st.error('Error')
+                st.error('Error!')
             
             # else:
             #     if isinstance(response, dict):
